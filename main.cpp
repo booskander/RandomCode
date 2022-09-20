@@ -22,13 +22,13 @@ struct Test {
 struct liste { 
 
 private:
-    int* buffer;
+    long long* buffer;
     int size_;
     int capacity = 10;
 
     void resize(){
         capacity *=2;
-        int* nuff = new int[capacity];
+        long long* nuff = new long long[capacity];
         for(int i = 0 ; i < size_; i++){
             nuff[i] = buffer[i];
         }
@@ -36,9 +36,9 @@ private:
         buffer = nuff;
     }
 public:
-    liste(){ buffer = new int[capacity];}
+    liste(){ buffer = new long long[capacity];}
 
-    int& get(int idx){
+    long long get(int idx){
     try { 
         return buffer[idx];
     }
@@ -49,7 +49,7 @@ public:
     }
 
 
-    void push_back(int& el){
+    void push_back(long long& el){
         if(size_ == capacity - 1)
             resize();
         buffer[size_] = el;
@@ -64,7 +64,7 @@ public:
 
     void clear(){
         capacity = 10;
-        int* newBuff = new int[capacity];
+        long long* newBuff = new long long[capacity];
         delete[] buffer;
         buffer = newBuff;
         size_ = 0;
@@ -72,7 +72,7 @@ public:
 
 };
 
-long long multRusse(int a, int b) {
+long long multRusse(long long a, long long b) {
 
     long long rslt = 0;
     liste* arr1 = new liste();
@@ -101,6 +101,7 @@ long long multRusse(int a, int b) {
 int main() {
     std::string premier;
     std::string deuxieme;
+    long long calcul = 0;
    
     // instanciation des Tests
     Test test1;
@@ -110,10 +111,10 @@ int main() {
     std::cin >> deuxieme;
     test1.valeur1 = std::stoll(premier);
     test1.valeur2 = std::stoll(deuxieme);
-
-    test1.verification(multRusse(test1.valeur1, test1.valeur2));
-
-        
+    calcul = multRusse(test1.valeur1, test1.valeur2);
+    test1.verification(calcul);
+    std::cout << "The result of the russian Multiplication is " << calcul <<std::endl;
+    
 
     
 
@@ -125,9 +126,9 @@ int main() {
     std::cin >> deuxieme;
     test2.valeur1 = std::stoll(premier);
     test2.valeur2 = std::stoll(deuxieme);
-
-    test2.verification(multRusse(test2.valeur1, test2.valeur2));
-
+    calcul = multRusse(test2.valeur1, test2.valeur2);
+    test2.verification(calcul);
+    std::cout << "The result of the russian Multiplication is " << calcul <<std::endl;
     
     
 
@@ -140,8 +141,10 @@ int main() {
     std::cin >> deuxieme;
     test3.valeur1 = std::stoll(premier);
     test3.valeur2 = std::stoll(deuxieme);
+    calcul = multRusse(test3.valeur1, test3.valeur2);
+    test3.verification(calcul);
+    std::cout << "The result of the russian Multiplication is " << calcul <<std::endl;
 
-    test3.verification(multRusse(test3.valeur1, test3.valeur2));
     
 
 
