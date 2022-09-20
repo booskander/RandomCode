@@ -7,7 +7,6 @@
 // ------------russian Multiplication Calculator------------
 // 
 // 
-// Ps: Yes it's in french, tokebekicitte
 using namespace std;
 
 struct Test {
@@ -20,33 +19,80 @@ struct Test {
     }
 };
 
+struct liste { 
+
+private:
+    int* buffer;
+    int size_;
+    int capacity = 10;
+
+    void resize(){
+        capacity *=2;
+        int* nuff = new int[capacity];
+        for(int i = 0 ; i < size_; i++){
+            nuff[i] = buffer[i];
+        }
+        delete[] buffer;
+        buffer = nuff;
+    }
+public:
+    liste(){ buffer = new int[capacity];}
+
+    int& get(int idx){
+    try { 
+        return buffer[idx];
+    }
+    catch(std::out_of_range e ){
+        std::cout << e.what();
+        throw idx;
+        }
+    }
+
+
+    void push_back(int& el){
+        if(size_ == capacity - 1)
+            resize();
+        buffer[size_] = el;
+
+        size_++;
+    }
+
+    int size(){return size_;}
+    ~liste(){
+        delete[] buffer;
+    }
+
+    void clear(){
+        capacity = 10;
+        int* newBuff = new int[capacity];
+        delete[] buffer;
+        buffer = newBuff;
+        size_ = 0;
+    }
+
+};
+
 long long multRusse(int a, int b) {
 
     long long rslt = 0;
-    int capacity = 12;
-    long long* arr1 = new long long[capacity];
-    long long* arr2 = new long long[capacity];
+    liste* arr1 = new liste();
+    liste* arr2 = new liste();
 
-    int idx = 0; 
+ 
 
-    arr1[idx] = a;
-    arr2[idx] = b;
+    arr1->push_back(a);
+    arr2->push_back(b);
     while (a > 0) {
-        if (idx == capacity)
-            capacity *= 2;
-        idx++;
-
         a = a / 2;
         b = b * 2;
-        arr1[idx] = a;
-        arr2[idx] = b;
+        arr1->push_back(a);
+        arr2->push_back(b);   
     }
 
-    for (int i = 0; i < idx ; i++) {
-        if (arr1[i] % 2 != 0)
-            rslt += arr2[i];
+    for (int i = 0; i < arr1->size(); i++) {
+        if (arr1->get(i) % 2 != 0)
+            rslt += arr2->get(i);
     }
-    delete[] arr1, arr2;
     return rslt;
 }
 
